@@ -35,6 +35,88 @@ Fungsi utama dari Button adalah untuk memicu suatu tindakan atau peristiwa  Digu
 
 <img width="1850" height="1020" alt="image" src="https://github.com/user-attachments/assets/e4cde362-302e-4e6c-8a60-63fabf3ea301" />
 
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Daftar Menu</title>
+  <script>
+    // Fungsi untuk menghitung total harga
+    function hitungTotal() {
+      let ayamGeprek = document.getElementById("menu1");
+      let nasiGoreng = document.getElementById("menu2");
+      let mieAyam = document.getElementById("menu3");
+
+      let total = 0;
+
+      if (ayamGeprek.checked) total += 10000;
+      if (nasiGoreng.checked) total += 15000;
+      if (mieAyam.checked) total += 12000;
+
+      document.getElementById("total").value = total;
+      document.getElementById("errorMsg").innerHTML = "";
+    }
+
+    // Fungsi validasi sebelum form dikirim
+    function validasiForm() {
+      let ayamGeprek = document.getElementById("menu1").checked;
+      let nasiGoreng = document.getElementById("menu2").checked;
+      let mieAyam = document.getElementById("menu3").checked;
+
+      // Jika tidak ada menu yang dipilih
+      if (!ayamGeprek && !nasiGoreng && !mieAyam) {
+        document.getElementById("errorMsg").innerHTML =
+          "Silakan pilih minimal satu menu sebelum memproses pesanan.";
+        return false;
+      }
+
+      // Jika total kosong (misalnya user hapus manual lewat inspect element)
+      let total = document.getElementById("total").value;
+      if (total === "" || total == 0) {
+        document.getElementById("errorMsg").innerHTML =
+          "Total tidak boleh kosong. Silakan pilih menu terlebih dahulu.";
+        return false;
+      }
+
+      document.getElementById("errorMsg").innerHTML = "";
+      alert("Pesanan berhasil diproses!\nTotal Bayar: Rp. " + total);
+      return true;
+    }
+
+    // Cegah pengguna mengetik manual di kolom total
+    function cegahEditTotal(event) {
+      event.preventDefault();
+      return false;
+    }
+    </script>
+</head>
+<body>
+          <h2>Daftar Menu Makanan</h2>
+
+    <form onsubmit="return validasiForm()">
+    <input type="checkbox" id="menu1" onclick="hitungTotal()"> Ayam Geprek Rp. 10.000<br>
+    <input type="checkbox" id="menu2" onclick="hitungTotal()"> Nasi Goreng Rp. 15.000<br>
+    <input type="checkbox" id="menu3" onclick="hitungTotal()"> Mie Ayam Rp. 12.000<br>
+    <hr>
+
+    Total Bayar: Rp. 
+    <input 
+      type="text" 
+      id="total" 
+      readonly 
+      onkeydown="return cegahEditTotal(event)" 
+      onpaste="return false"
+      style="width:100px;"
+    ><br><br>
+
+    <span id="errorMsg" style="color:red; font-weight:bold;"></span><br>
+    <input type="submit" value="Proses Pesanan">
+  </form>
+</body>
+</html>
+
+
+
+
 1. Fungsi hitungTotal()
 
 Dipanggil setiap kali checkbox diubah (klik on/off).
